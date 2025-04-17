@@ -1,0 +1,646 @@
+/* style.css */
+
+/*---------------------------------------------------------------------
+    1. Base Styles & Variables
+    2. Tailwind Component Overrides/Customizations (Optional)
+    3. Custom Utility Classes
+    4. Navigation Styles
+    5. Hero Section Styles
+    6. About Section Styles
+    7. Services Section Styles
+    8. Consultation Section Styles
+    9. Gallery Section Styles
+    10. Testimonials Section Styles
+    11. Contact Section Styles
+    12. Footer Styles
+    13. Animations & Effects
+    14. Responsive Adjustments
+---------------------------------------------------------------------*/
+
+/* 1. Base Styles & Variables */
+:root {
+    --primary-purple: #8a2be2; /* BlueViolet */
+    --primary-green: #3cb371;  /* MediumSeaGreen */
+    --light-purple: #d8bfd8; /* Thistle */
+    --light-green: #98fb98;  /* PaleGreen */
+    --dark-purple: #4b0082;  /* Indigo */
+    --dark-green: #006400;   /* DarkGreen */
+    --text-dark: #333;
+    --text-light: #f8f9fa;
+    --text-muted: #6c757d;
+    --bg-light: #ffffff;
+    --bg-soft: #f5f7fa;
+    --border-color: #e2e8f0;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, var(--primary-purple), var(--primary-green));
+    --gradient-secondary: linear-gradient(135deg, var(--light-purple), var(--light-green));
+    --gradient-footer: linear-gradient(135deg, var(--dark-purple), var(--dark-green));
+    --gradient-hero: linear-gradient(135deg, #f3e8ff 0%, #e6fff0 100%); /* Lighter gradient for hero */
+    --gradient-section-1: linear-gradient(135deg, rgba(216, 191, 216, 0.3) 0%, rgba(152, 251, 152, 0.3) 100%);
+    --gradient-section-2: linear-gradient(135deg, rgba(152, 251, 152, 0.3) 0%, rgba(216, 191, 216, 0.3) 100%);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.7; /* Slightly increased line-height */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    background-color: var(--bg-soft); /* Base background */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Lora', serif;
+    font-weight: 600; /* Default heading weight */
+}
+
+/* 2. Tailwind Component Overrides/Customizations (Example) */
+/* If needed, you can customize base Tailwind elements here */
+/* .container { max-width: 1140px; } */
+
+/* 3. Custom Utility Classes */
+.gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block; /* Important for background clip */
+}
+
+.hero-gradient-bg {
+    background: var(--gradient-hero);
+}
+
+.section-gradient-1 {
+    background: var(--gradient-section-1);
+}
+
+.section-gradient-2 {
+    background: var(--gradient-section-2);
+}
+
+.footer-gradient-bg {
+    background: var(--gradient-footer);
+}
+
+/* Buttons */
+.btn-primary {
+    display: inline-block;
+    background: var(--gradient-primary);
+    color: var(--text-light);
+    transition: all 0.3s ease;
+    border-radius: 30px;
+    padding: 0.75rem 1.5rem; /* 12px 24px */
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(138, 43, 226, 0.3); /* Purple shadow */
+}
+
+.btn-secondary {
+    display: inline-flex; /* Use flex for icon alignment */
+    align-items: center;
+    padding: 0.75rem 1.5rem; /* 12px 24px */
+    background-color: var(--bg-light);
+    border: 2px solid var(--primary-purple);
+    border-radius: 30px;
+    color: var(--primary-purple);
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-purple);
+    color: var(--text-light);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Cards */
+.card {
+    transition: all 0.3s ease;
+    border-radius: 1rem; /* 16px */
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    background-color: var(--bg-light);
+}
+
+.hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* 4. Navigation Styles */
+.nav-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+/* Add class via JS on scroll */
+.nav-scrolled {
+     background-color: rgba(255, 255, 255, 0.98);
+     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+     padding-top: 0.5rem; /* 8px */
+     padding-bottom: 0.5rem; /* 8px */
+}
+
+.nav-link {
+    position: relative;
+    transition: color 0.3s ease;
+    padding-bottom: 8px; /* Space for underline */
+    font-weight: 500;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0; /* Position underline at the bottom */
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link:hover {
+    color: var(--primary-purple); /* Match hover color */
+}
+
+/* Mobile Menu Specific */
+#mobile-menu.open {
+    transform: translateX(0);
+}
+
+.mobile-nav-link {
+     transition: color 0.3s ease;
+}
+
+/* 5. Hero Section Styles */
+.doctor-image {
+    transition: all 0.5s ease;
+    border-radius: 1.5rem; /* 24px */
+}
+
+.doctor-image:hover {
+    transform: scale(1.03) rotate(1deg);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* 6. About Section Styles */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem; /* 8px */
+    background-color: rgba(216, 191, 216, 0.2); /* Light purple bg */
+    padding: 0.5rem 1rem; /* 8px 16px */
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--dark-purple);
+}
+
+.quote {
+    font-style: italic;
+    color: var(--text-muted);
+    border-left: 4px solid var(--primary-purple);
+    padding-left: 1.5rem; /* 24px */
+    margin-top: 2rem; /* 32px */
+}
+.quote p {
+    margin-bottom: 0.5rem; /* 8px */
+}
+.quote cite {
+    display: block;
+    margin-top: 0.5rem; /* 8px */
+    font-size: 0.9em;
+    font-style: normal;
+    color: var(--primary-green);
+}
+
+/* 7. Services Section Styles */
+.service-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem; /* 64px */
+    height: 4rem; /* 64px */
+    border-radius: 50%;
+    background-color: rgba(138, 43, 226, 0.1); /* Lighter purple */
+    margin-bottom: 1.5rem; /* 24px */
+    transition: all 0.3s ease;
+}
+
+.service-icon {
+    color: var(--primary-purple);
+    font-size: 1.75rem; /* 28px */
+    transition: all 0.3s ease;
+}
+
+.card:hover .service-icon-wrapper {
+    background-color: var(--primary-purple);
+}
+
+.card:hover .service-icon {
+    color: var(--text-light);
+    transform: scale(1.1);
+}
+
+.service-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-purple);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.service-link:hover {
+    color: var(--primary-green);
+    transform: translateX(4px);
+}
+
+/* 8. Consultation Section Styles */
+.consultation-card {
+    position: relative; /* Needed for absolute positioning of badge */
+}
+
+.consultation-icon {
+    font-size: 2.5rem; /* 40px */
+    color: var(--primary-purple);
+    transition: all 0.3s ease;
+    margin-bottom: 1rem; /* Add space below icon */
+}
+
+.consultation-card:hover .consultation-icon {
+    color: var(--primary-green);
+    transform: translateY(-5px);
+}
+
+.consultation-price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem; /* 16px */
+    gap: 0.75rem; /* 12px */
+}
+
+.currency-icons {
+    display: flex;
+    gap: 0.25rem; /* 4px */
+}
+
+.currency-icon {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+.currency-icon:hover {
+    transform: scale(1.2);
+}
+
+.recommended-card {
+    border: 2px solid var(--primary-purple);
+    box-shadow: 0 10px 30px rgba(138, 43, 226, 0.15);
+}
+
+.recommended-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--primary-purple);
+    color: white;
+    font-size: 0.75rem; /* 12px */
+    font-weight: bold;
+    padding: 0.25rem 0.75rem; /* 4px 12px */
+    border-radius: 0 0 0 0.5rem; /* Rounded bottom-left */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Schedule & Payment Info Box */
+.info-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1rem; /* 16px */
+    display: flex;
+    align-items: center;
+    color: var(--dark-purple);
+}
+
+.info-icon {
+    color: var(--primary-purple);
+    margin-right: 0.75rem; /* 12px */
+    font-size: 1.2rem;
+}
+
+.info-list {
+    list-style: none;
+    padding-left: 0; /* Remove default padding */
+    space-y: 0.75rem; /* Tailwind class equivalent */
+}
+.info-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 2rem; /* Indent list items */
+    position: relative; /* For potential custom bullets */
+    font-size: 0.95rem;
+}
+.info-list li i { /* Icon styling within list */
+    font-size: 1rem;
+}
+
+/* 9. Gallery Section Styles */
+.gallery-image {
+    width: 100%;
+    height: 20rem; /* 320px, adjust as needed */
+    object-fit: cover; /* Crop images nicely */
+    border-radius: 1rem; /* 16px */
+    transition: all 0.4s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.gallery-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    cursor: pointer; /* Indicate interactivity (if adding lightbox) */
+}
+
+/* 10. Testimonials Section Styles */
+.testimonial {
+    position: relative; /* For pseudo-element */
+    transition: transform 0.3s ease;
+}
+
+.testimonial::before {
+    content: '“'; /* Use opening quote */
+    position: absolute;
+    top: -10px;
+    left: 15px;
+    font-size: 5rem; /* 80px */
+    font-family: 'Lora', serif;
+    color: rgba(138, 43, 226, 0.08); /* Very light purple */
+    z-index: 0;
+    line-height: 1;
+}
+
+.testimonial:hover {
+    transform: translateY(-5px);
+}
+
+.testimonial-stars {
+    display: flex;
+    color: #ffc107; /* Amber/Yellow */
+    margin-bottom: 1rem; /* 16px */
+    font-size: 1.1rem;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    margin-top: 1.5rem; /* 24px */
+}
+
+.testimonial-avatar {
+    width: 3rem; /* 48px */
+    height: 3rem; /* 48px */
+    border-radius: 50%;
+    background-color: var(--light-purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark-purple);
+    font-weight: bold;
+    font-size: 1.2rem;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+/* 11. Contact Section Styles */
+.contact-info-item {
+    margin-bottom: 1.5rem; /* 24px */
+}
+.contact-info-item:last-child {
+    margin-bottom: 0;
+}
+
+.contact-link {
+    color: var(--text-dark);
+    transition: color 0.3s ease;
+}
+.contact-link:hover {
+    color: var(--primary-purple);
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem; /* 40px */
+    height: 2.5rem; /* 40px */
+    border-radius: 50%;
+    color: var(--text-light);
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+.social-icon.instagram { background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); }
+.social-icon.whatsapp { background-color: #25D366; }
+.social-icon.facebook { background-color: #1877F2; }
+
+.social-icon:hover {
+    transform: scale(1.15);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Form Styles */
+.form-label {
+    display: block;
+    color: var(--text-dark);
+    font-weight: 500;
+    margin-bottom: 0.5rem; /* 8px */
+    font-size: 0.9rem;
+}
+
+.form-input,
+.form-select, /* Added for consistency */
+textarea.form-input { /* Target textarea specifically */
+    width: 100%;
+    padding: 0.85rem 1rem; /* Slightly larger padding */
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem; /* 8px */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1rem;
+    background-color: #f8f9fa; /* Light background for inputs */
+}
+
+.form-input:focus,
+.form-select:focus,
+textarea.form-input:focus {
+    outline: none;
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.15);
+}
+
+/* Map Placeholder Styling */
+.map-placeholder img {
+    border-radius: 0.75rem; /* 12px */
+}
+
+/* 12. Footer Styles */
+.footer-link {
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+}
+
+.footer-link:hover {
+    color: var(--light-green);
+    transform: translateY(-2px);
+}
+
+.footer-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem; /* 40px */
+    height: 2.5rem; /* 40px */
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--text-light);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-social-icon:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* 13. Animations & Effects */
+
+/* Floating animation for decorative elements */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+}
+.float-animation {
+    animation: float 5s ease-in-out infinite;
+}
+
+/* Fade-in animation (used by Intersection Observer) */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.fade-in.appear {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* WhatsApp Float Button */
+.whatsapp-float-button {
+    position: fixed;
+    bottom: 1.5rem; /* 24px */
+    right: 1.5rem; /* 24px */
+    width: 4rem; /* 64px */
+    height: 4rem; /* 64px */
+    background-color: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 999; /* Ensure it's above most elements */
+}
+.whatsapp-float-button:hover {
+    background-color: #128C7E; /* Darker green */
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Back to Top Button */
+#back-to-top {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+#back-to-top.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* 14. Responsive Adjustments */
+@media (max-width: 768px) {
+    /* Adjust padding for smaller screens */
+    section {
+        padding-top: 4rem; /* 64px */
+        padding-bottom: 4rem; /* 64px */
+    }
+    .hero-section {
+        padding-top: 6rem; /* More padding top for hero on mobile */
+    }
+
+    /* Stack columns in hero and about sections */
+    .hero-section .flex-col,
+    .about-section .flex-col {
+        /* Tailwind handles stacking, but ensure text alignment */
+        text-align: center;
+    }
+    .hero-section .justify-start {
+        justify-content: center;
+    }
+
+    /* Adjust heading sizes */
+    h1 { font-size: 2.5rem; } /* 40px */
+    h2 { font-size: 2rem; } /* 32px */
+
+    /* Center consultation price details */
+    .consultation-price {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    /* Adjust footer layout */
+    footer .flex-col {
+         gap: 1.5rem; /* Add gap between stacked footer items */
+    }
+     footer .text-center {
+         text-align: center !important; /* Ensure footer text is centered */
+     }
+
+     /* Ensure map placeholder maintains aspect ratio */
+     .map-placeholder img {
+         height: 300px; /* Adjust height for mobile */
+     }
+
+     /* Adjust float button position if needed */
+     .whatsapp-float-button {
+         width: 3.5rem; /* 56px */
+         height: 3.5rem; /* 56px */
+         bottom: 1rem;
+         right: 1rem;
+     }
+     #back-to-top {
+         bottom: 1rem;
+         left: 1rem;
+         width: 3rem;
+         height: 3rem;
+     }
+}
+
