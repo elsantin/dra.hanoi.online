@@ -1,4 +1,52 @@
-// script.js
+// drahanoi.js
+// (Renamed from script.js to match user's file on GitHub)
+
+/**
+ * Handles smooth scrolling to sections with an offset for the fixed navbar.
+ * Uses getBoundingClientRect for potentially more accurate positioning.
+ * @param {Event} event The click event.
+ */
+const handleSmoothScroll = (event) => {
+    const link = event.target.closest('a.smooth-scroll-link'); // Find the link element
+    if (!link) return; // Exit if the click wasn't on a valid link
+
+    const targetId = link.getAttribute('href');
+    // Basic check if it's an internal link starting with #
+    if (targetId && targetId.startsWith('#')) {
+        event.preventDefault(); // Prevent default anchor jump
+
+        const targetElement = document.querySelector(targetId);
+        const navbar = document.getElementById('navbar');
+
+        if (targetElement && navbar) {
+            const navbarHeight = navbar.offsetHeight;
+            // Calculate position using getBoundingClientRect relative to viewport + current scroll position
+            const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - navbarHeight - 24; // Increased offset to 24px
+
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+
+            // If it's the mobile menu, close it after clicking
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu && mobileMenu.classList.contains('open')) {
+                 // Add timeout to allow scroll to start before closing menu
+                 setTimeout(() => {
+                    mobileMenu.classList.remove('open');
+                    mobileMenu.classList.add('translate-x-full');
+                    document.body.style.overflow = ''; // Restore scroll
+                 }, 150); // Small delay
+            }
+        } else {
+            console.warn(`Smooth scroll target "${targetId}" or navbar not found.`);
+            // Fallback to default behavior if target/navbar not found
+             window.location.hash = targetId;
+        }
+    }
+    // If it's an external link (like WhatsApp), let the browser handle it (no preventDefault)
+};
+
 
 /**
  * Handles toggling the mobile navigation menu.
@@ -7,7 +55,7 @@ const setupMobileMenu = () => {
     const menuToggle = document.getElementById('menu-toggle');
     const closeMenu = document.getElementById('close-menu');
     const mobileMenu = document.getElementById('mobile-menu');
-    const mobileLinks = mobileMenu.querySelectorAll('.mobile-nav-link'); // Use specific class
+    // Note: Smooth scroll for mobile links is handled by the global click listener
 
     if (menuToggle && closeMenu && mobileMenu) {
         menuToggle.addEventListener('click', () => {
@@ -22,23 +70,6 @@ const setupMobileMenu = () => {
             document.body.style.overflow = ''; // Restore scroll
         });
 
-        // Close menu when a link is clicked
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('open');
-                mobileMenu.classList.add('translate-x-full');
-                document.body.style.overflow = '';
-                // Smooth scroll to section
-                const targetId = link.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    // Add timeout to allow menu closing animation
-                    setTimeout(() => {
-                         targetElement.scrollIntoView({ behavior: 'smooth' });
-                    }, 150); // Adjust delay if needed
-                }
-            });
-        });
     } else {
         console.warn("Mobile menu elements not found.");
     }
@@ -177,22 +208,65 @@ const setupContactForm = () => {
 }
 
 /**
+ * Sets up the FAQ accordion functionality.
+ */
+const setupFAQAccordion = () => {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const questionButton = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+
+        if (questionButton && answer) {
+            questionButton.addEventListener('click', () => {
+                // Toggle active class on the item
+                const isActive = item.classList.toggle('active');
+
+                // Toggle answer visibility based on active class
+                if (isActive) {
+                    // Set max-height to the scroll height to animate opening
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                } else {
+                    // Set max-height to 0 to animate closing
+                    answer.style.maxHeight = '0';
+                }
+
+                // Optional: Close other open items
+                // faqItems.forEach(otherItem => {
+                //     if (otherItem !== item && otherItem.classList.contains('active')) {
+                //         otherItem.classList.remove('active');
+                //         otherItem.querySelector('.faq-answer').style.maxHeight = '0';
+                //     }
+                // });
+            });
+
+             // Set initial max-height to 0 for closed state
+             if (!item.classList.contains('active')) {
+                answer.style.maxHeight = '0';
+            }
+        }
+    });
+};
+
+
+/**
  * Main function to run when the DOM is fully loaded.
  */
 document.addEventListener('DOMContentLoaded', () => {
     setupMobileMenu();
     setupNavbarScroll();
-    // Call fade-in animation setup - uncomment if elements with 'fade-in' class are added
-    // setupFadeInAnimation();
     setupBackToTopButton();
     updateCopyrightYear();
     setupContactForm(); // Initialize contact form handling (simulation)
+    setupFAQAccordion(); // Initialize FAQ accordion
 
     // Add fade-in class to sections for animation (if desired)
-    // You can be more selective about which sections get the animation
     const sections = document.querySelectorAll('section');
     sections.forEach(section => {
         section.classList.add('fade-in'); // Add class to trigger observer
     });
     setupFadeInAnimation(); // Now call the observer setup
+
+    // Add global click listener for smooth scroll links
+    document.body.addEventListener('click', handleSmoothScroll);
 });

@@ -9,12 +9,13 @@
     6. About Section Styles
     7. Services Section Styles
     8. Consultation Section Styles
-    9. Gallery Section Styles
+    9. Gallery Section Styles (Removed, but keeping number for consistency)
     10. Testimonials Section Styles
-    11. Contact Section Styles
-    12. Footer Styles
-    13. Animations & Effects
-    14. Responsive Adjustments
+    11. FAQ Section Styles (NEW)
+    12. Contact Section Styles
+    13. Footer Styles
+    14. Animations & Effects
+    15. Responsive Adjustments
 ---------------------------------------------------------------------*/
 
 /* 1. Base Styles & Variables */
@@ -42,7 +43,7 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; /* Let JS handle smooth scroll for offsets */
 }
 
 body {
@@ -56,6 +57,8 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Lora', serif;
     font-weight: 600; /* Default heading weight */
+    line-height: 1.4; /* Added for better descender spacing */
+    padding-bottom: 0.1em; /* Added to prevent descender clipping */
 }
 
 /* 2. Tailwind Component Overrides/Customizations (Example) */
@@ -352,32 +355,28 @@ h1, h2, h3, h4, h5, h6 {
     space-y: 0.75rem; /* Tailwind class equivalent */
 }
 .info-list li {
-    display: flex;
-    justify-content: space-between;
+    /* display: flex; */ /* Let flex handle alignment */
+    /* justify-content: space-between; */ /* Removed for better alignment with icons */
     align-items: center;
-    padding-left: 2rem; /* Indent list items */
+    padding-left: 0; /* Let flex gap handle spacing */
     position: relative; /* For potential custom bullets */
     font-size: 0.95rem;
+    min-height: 1.5rem; /* Ensure consistent height */
 }
-.info-list li i { /* Icon styling within list */
+.info-list li i, .info-list li svg { /* Icon styling within list */
     font-size: 1rem;
+    width: 1.25rem; /* 20px */
+    text-align: center; /* Center FontAwesome icons */
+    margin-right: 0.5rem; /* 8px */
+    flex-shrink: 0; /* Prevent icons from shrinking */
+}
+.info-list li span {
+    flex-grow: 1; /* Allow text to take remaining space */
 }
 
-/* 9. Gallery Section Styles */
-.gallery-image {
-    width: 100%;
-    height: 20rem; /* 320px, adjust as needed */
-    object-fit: cover; /* Crop images nicely */
-    border-radius: 1rem; /* 16px */
-    transition: all 0.4s ease;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
 
-.gallery-image:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    cursor: pointer; /* Indicate interactivity (if adding lightbox) */
-}
+/* 9. Gallery Section Styles (REMOVED) */
+
 
 /* 10. Testimonials Section Styles */
 .testimonial {
@@ -414,7 +413,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 1.5rem; /* 24px */
 }
 
-.testimonial-avatar {
+.testimonial-avatar { /* Style for the old avatar div, keep for reference */
     width: 3rem; /* 48px */
     height: 3rem; /* 48px */
     border-radius: 50%;
@@ -428,7 +427,33 @@ h1, h2, h3, h4, h5, h6 {
     flex-shrink: 0; /* Prevent shrinking */
 }
 
-/* 11. Contact Section Styles */
+/* Style for the new testimonial images */
+.testimonial-author img {
+    width: 3rem; /* 48px */
+    height: 3rem; /* 48px */
+    border-radius: 50%;
+    object-fit: cover; /* Ensure image covers the circle */
+    margin-right: 1rem; /* 16px */
+    flex-shrink: 0;
+}
+
+/* 11. FAQ Section Styles (NEW) */
+.faq-item .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out; /* Smooth transition */
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px; /* Adjust if answers are very long */
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+
+
+/* 12. Contact Section Styles */
 .contact-info-item {
     margin-bottom: 1.5rem; /* 24px */
 }
@@ -439,6 +464,7 @@ h1, h2, h3, h4, h5, h6 {
 .contact-link {
     color: var(--text-dark);
     transition: color 0.3s ease;
+    word-break: break-all; /* Break long emails/links */
 }
 .contact-link:hover {
     color: var(--primary-purple);
@@ -498,7 +524,7 @@ textarea.form-input:focus {
     border-radius: 0.75rem; /* 12px */
 }
 
-/* 12. Footer Styles */
+/* 13. Footer Styles */
 .footer-link {
     color: rgba(255, 255, 255, 0.8);
     transition: color 0.3s ease, transform 0.3s ease;
@@ -527,7 +553,7 @@ textarea.form-input:focus {
     transform: scale(1.1);
 }
 
-/* 13. Animations & Effects */
+/* 14. Animations & Effects */
 
 /* Floating animation for decorative elements */
 @keyframes float {
@@ -585,7 +611,7 @@ textarea.form-input:focus {
 }
 
 
-/* 14. Responsive Adjustments */
+/* 15. Responsive Adjustments */
 @media (max-width: 768px) {
     /* Adjust padding for smaller screens */
     section {
@@ -628,6 +654,11 @@ textarea.form-input:focus {
      .map-placeholder img {
          height: 300px; /* Adjust height for mobile */
      }
+     /* Ensure iframe map maintains aspect ratio */
+     section#contacto iframe {
+         height: 350px; /* Adjust height for mobile */
+     }
+
 
      /* Adjust float button position if needed */
      .whatsapp-float-button {
@@ -643,4 +674,3 @@ textarea.form-input:focus {
          height: 3rem;
      }
 }
-
