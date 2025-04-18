@@ -667,13 +667,19 @@ textarea.form-input:focus {
         background-position-y: 0 !important; /* Disable JS parallax on mobile */
     }
 
-    /* --- NEW: Center Service Icons on Mobile --- */
+    /* --- Center Service Icons on Mobile --- */
     #servicios .service-icon-wrapper {
         margin-left: auto;
         margin-right: auto;
     }
 
-    /* --- NEW: Left-align About Me Text/Quote on Mobile --- */
+    /* --- Center Service Card Title & Text on Mobile --- */
+    #servicios .card h3,
+    #servicios .card p {
+        text-align: center;
+    }
+
+    /* --- Left-align About Me Text/Quote on Mobile --- */
     /* Override general section centering for About Me text block */
      #sobre-mi .container > .flex > div:nth-child(2) { /* Target second div (text block) */
         text-align: left;
