@@ -15,7 +15,7 @@
     12. Contact Section Styles
     13. Footer Styles
     14. Animations & Effects (UPDATED)
-    15. Responsive Adjustments
+    15. Responsive Adjustments (UPDATED)
 ---------------------------------------------------------------------*/
 
 /* 1. Base Styles & Variables */
@@ -312,7 +312,7 @@ h1, h2, h3, h4, h5, h6 {
     gap: 0.25rem; /* Smaller gap now */
 }
 
-/* REMOVED: Empty ruleset for .currency-icons as it was unused and flagged by linter */
+/* REMOVED: Empty ruleset for .currency-icons */
 
 .currency-icon {
     font-size: 1.1rem;
@@ -368,7 +368,6 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     font-size: 0.95rem;
     min-height: 1.5rem;
-    /* Add margin-bottom for spacing if not using Tailwind's space-y in HTML */
      margin-bottom: 0.75rem; /* Equivalent to space-y-3 */
 }
 .info-list li:last-child {
@@ -569,14 +568,14 @@ textarea.form-input:focus {
 
 /* 14. Animations & Effects (UPDATED) */
 
-/* --- NEW: Keyframes for Gradient Shift --- */
+/* --- Keyframes for Gradient Shift --- */
 @keyframes gradientShift {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
-/* --- NEW: Keyframes for Button Pulse/Glow --- */
+/* --- Keyframes for Button Pulse/Glow --- */
 @keyframes pulseGlow {
     0% {
         transform: scale(1);
@@ -592,7 +591,7 @@ textarea.form-input:focus {
     }
 }
 
-/* --- NEW: Apply Pulse/Glow to specific buttons --- */
+/* --- Apply Pulse/Glow to specific buttons --- */
 /* Add class 'cta-pulse' to buttons in HTML */
 .cta-pulse {
     animation: pulseGlow 2.5s infinite ease-in-out;
@@ -655,7 +654,7 @@ textarea.form-input:focus {
 }
 
 
-/* 15. Responsive Adjustments */
+/* 15. Responsive Adjustments (UPDATED) */
 @media (max-width: 768px) {
     /* Adjust padding for smaller screens */
     section {
@@ -665,23 +664,31 @@ textarea.form-input:focus {
      /* Targeting the actual hero section via its gradient class */
     .hero-gradient-bg {
         padding-top: 6rem; /* More padding top for hero on mobile */
-        background-position-y: 0 !important; /* Disable JS parallax on mobile? Optional */
+        background-position-y: 0 !important; /* Disable JS parallax on mobile */
     }
 
+    /* --- NEW: Center Service Icons on Mobile --- */
+    #servicios .service-icon-wrapper {
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-    /* Stack columns in hero and about sections */
-    /* Tailwind handles stacking via md:flex-row, text alignment needs adjustment */
-     section .container > .flex-col { /* Target direct children flex containers in sections */
-        text-align: center;
+    /* --- NEW: Left-align About Me Text/Quote on Mobile --- */
+    /* Override general section centering for About Me text block */
+     #sobre-mi .container > .flex > div:nth-child(2) { /* Target second div (text block) */
+        text-align: left;
      }
-     section .container > .flex-col .md\:text-left { /* Override text-left for mobile */
-        text-align: center;
+     /* Ensure quote is also left-aligned and adjust margin if needed */
+     #sobre-mi .quote {
+        text-align: left;
+        margin-left: 0; /* Remove potential auto margins */
+        margin-right: 0;
+        /* Keep padding-left for the border */
+        padding-left: 1.5rem;
      }
-     section .container > .flex-col .md\:justify-start { /* Override justify-start for mobile */
-        justify-content: center;
+     #sobre-mi .quote p, #sobre-mi .quote cite {
+         text-align: left; /* Ensure inner elements are also left */
      }
-     /* More specific overrides might be needed depending on structure */
-
 
     /* Adjust heading sizes */
     h1 { font-size: 2.5rem; } /* 40px */
@@ -696,7 +703,6 @@ textarea.form-input:focus {
     /* Adjust footer layout */
     footer .container > .flex-col { /* Target direct children flex containers in footer */
         gap: 1.5rem; /* Add gap between stacked footer items */
-        /* text-align: center !important; */ /* Let items center themselves */
     }
     /* Ensure footer text below HR is centered */
      footer .text-center {
