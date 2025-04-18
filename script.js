@@ -1,5 +1,5 @@
-// drahanoi.js
-// (Renamed from script.js to match user's file on GitHub)
+// script.js
+// (Formerly drahanoi.js)
 
 /**
  * Handles smooth scrolling to sections with an offset for the fixed navbar.
