@@ -7,7 +7,7 @@
     4. Navigation Styles
     5. Hero Section Styles
     6. About Section Styles
-    7. Services Section Styles
+    7. Services Section Styles (UPDATED)
     8. Consultation Section Styles
     9. Gallery Section Styles (Removed, but keeping number for consistency)
     10. Testimonials Section Styles
@@ -246,7 +246,7 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--primary-green);
 }
 
-/* 7. Services Section Styles */
+/* 7. Services Section Styles (UPDATED) */
 .service-icon-wrapper {
     display: flex;
     align-items: center;
@@ -285,6 +285,12 @@ h1, h2, h3, h4, h5, h6 {
 .service-link:hover {
     color: var(--primary-green);
     transform: translateX(4px);
+}
+
+/* --- NEW: Center Service Card Title & Text Globally --- */
+#servicios .card h3,
+#servicios .card p {
+    text-align: center;
 }
 
 /* 8. Consultation Section Styles */
@@ -673,11 +679,13 @@ textarea.form-input:focus {
         margin-right: auto;
     }
 
-    /* --- Center Service Card Title & Text on Mobile --- */
+    /* --- Center Service Card Title & Text on Mobile --- MOVED TO GLOBAL */
+    /*
     #servicios .card h3,
     #servicios .card p {
         text-align: center;
     }
+    */
 
     /* --- Left-align About Me Text/Quote on Mobile --- */
     /* Override general section centering for About Me text block */
