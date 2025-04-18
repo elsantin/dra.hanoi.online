@@ -36,7 +36,6 @@ const handleSmoothScroll = (event) => {
                 // Use a small delay to ensure the scroll starts before the menu visually closes
                 setTimeout(() => {
                     mobileMenu.classList.remove('open'); // <<< SIMPLIFIED: Only remove 'open' class
-                    // mobileMenu.classList.add('translate-x-full'); // <<< REMOVED: Let CSS handle transition via .open class
                     document.body.style.overflow = ''; // Restore scrolling on the body
                 }, 150); // 150ms delay
             }
@@ -65,14 +64,12 @@ const setupMobileMenu = () => {
         // Listener for the hamburger button to open the menu
         menuToggle.addEventListener('click', () => {
             mobileMenu.classList.add('open'); // Add 'open' class to trigger CSS transition/styles
-            // mobileMenu.classList.remove('translate-x-full'); // <<< REMOVED: Let CSS handle this
             document.body.style.overflow = 'hidden'; // Prevent background scrolling when menu is open
         });
 
         // Listener for the close button (X) to close the menu
         closeMenu.addEventListener('click', () => {
             mobileMenu.classList.remove('open'); // Remove 'open' class to trigger CSS transition/styles
-            // mobileMenu.classList.add('translate-x-full'); // <<< REMOVED: Let CSS handle this
             document.body.style.overflow = ''; // Restore background scrolling
         });
 
@@ -208,22 +205,7 @@ const setupContactForm = () => {
             }
 
             // --- Form Submission Simulation ---
-            // In a real application, you would send the data here using:
-            // fetch('/your-server-endpoint', {
-            //     method: 'POST',
-            //     body: new FormData(form) // Or construct JSON data
-            // })
-            // .then(response => response.json()) // Or handle response as needed
-            // .then(data => {
-            //     formStatus.textContent = '¡Mensaje enviado con éxito!';
-            //     formStatus.style.color = 'green';
-            //     form.reset();
-            // })
-            // .catch(error => {
-            //     formStatus.textContent = 'Error al enviar el mensaje. Intenta de nuevo.';
-            //     formStatus.style.color = 'red';
-            //     console.error('Form submission error:', error);
-            // });
+            // In a real application, you would send the data here using fetch()
 
             // --- Simulation Feedback ---
             formStatus.textContent = '¡Gracias por tu mensaje! (Simulación - Formulario no conectado)';
@@ -251,7 +233,6 @@ const setupFAQAccordion = () => {
 
         if (questionButton && answer) {
             // Set initial state based on CSS (max-height: 0)
-            // Ensure initial max-height is set if not active (redundant if CSS does it, but safe)
             if (!item.classList.contains('active')) {
                  answer.style.maxHeight = '0';
             }
@@ -271,18 +252,45 @@ const setupFAQAccordion = () => {
                 }
 
                 // --- Optional: Close other open FAQ items ---
-                // Uncomment the following block if you want only one FAQ item open at a time.
-                /*
                 faqItems.forEach(otherItem => {
-                    // If this is not the clicked item AND it is currently active
                     if (otherItem !== item && otherItem.classList.contains('active')) {
-                        otherItem.classList.remove('active'); // Deactivate it
-                        otherItem.querySelector('.faq-answer').style.maxHeight = '0'; // Close its answer panel
+                        otherItem.classList.remove('active');
+                        otherItem.querySelector('.faq-answer').style.maxHeight = '0'; // Close others
                     }
                 });
-                */
             });
         }
+    });
+};
+
+/**
+ * --- NEW: Sets up a subtle parallax effect for the hero section background gradient ---
+ */
+const setupHeroParallax = () => {
+    const heroSection = document.getElementById('hero-section'); // Use the ID added in HTML
+    if (!heroSection) {
+        console.warn("Hero section element not found for parallax effect.");
+        return;
+    }
+
+    // Apply effect only on larger screens (optional)
+    if (window.innerWidth < 768) { // Tailwind's 'md' breakpoint
+        heroSection.style.backgroundPositionY = '0px'; // Reset on mobile
+        return;
+    }
+
+
+    window.addEventListener('scroll', () => {
+        // Calculate a slower scroll speed for the background position
+        // Adjust the multiplier (e.g., 0.3) to control the speed difference
+        const scrollPosition = window.scrollY;
+        const parallaxOffset = scrollPosition * 0.3; // Move background slower than scroll
+
+        // Apply the calculated offset to the background-position-y
+        // Use requestAnimationFrame for smoother performance (optional but recommended)
+        window.requestAnimationFrame(() => {
+             heroSection.style.backgroundPositionY = `${parallaxOffset}px`;
+        });
     });
 };
 
@@ -299,15 +307,15 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCopyrightYear();
     setupContactForm(); // Initialize contact form handling (simulation)
     setupFAQAccordion(); // Initialize FAQ accordion
+    setupHeroParallax(); // <<< NEW: Initialize hero parallax effect
 
     // Prepare elements for fade-in animation
-    const sections = document.querySelectorAll('section'); // Select all sections (or specific elements)
+    const sections = document.querySelectorAll('section'); // Apply to all sections now
     sections.forEach(section => {
         section.classList.add('fade-in'); // Add class to elements that should fade in
     });
     setupFadeInAnimation(); // Start observing the elements
 
     // Add the global click listener for smooth scrolling links
-    // This is more efficient than adding a listener to each link individually
     document.body.addEventListener('click', handleSmoothScroll);
 });
