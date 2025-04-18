@@ -11,7 +11,7 @@
     8. Consultation Section Styles
     9. Gallery Section Styles (Removed, but keeping number for consistency)
     10. Testimonials Section Styles
-    11. FAQ Section Styles (NEW)
+    11. FAQ Section Styles (Updated for JS dynamic height)
     12. Contact Section Styles
     13. Footer Styles
     14. Animations & Effects
@@ -185,8 +185,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Mobile Menu Specific */
+#mobile-menu {
+    transition: transform 0.3s ease-in-out; /* Ensure transition is defined */
+}
 #mobile-menu.open {
-    transform: translateX(0);
+    transform: translateX(0); /* Slides in when 'open' class is added by JS */
 }
 
 .mobile-nav-link {
@@ -298,13 +301,15 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: center;
     margin-bottom: 1rem; /* 16px */
-    gap: 0.75rem; /* 12px */
+    gap: 0.25rem; /* Smaller gap now */
 }
 
+/* REMOVED: Empty ruleset for .currency-icons as it was unused and flagged by linter
 .currency-icons {
-    display: flex;
-    gap: 0.25rem; /* 4px */
+     display: flex;
+     gap: 0.25rem;
 }
+*/
 
 .currency-icon {
     font-size: 1.1rem;
@@ -352,7 +357,8 @@ h1, h2, h3, h4, h5, h6 {
 .info-list {
     list-style: none;
     padding-left: 0; /* Remove default padding */
-    space-y: 0.75rem; /* Tailwind class equivalent */
+    /* REMOVED: Invalid 'space-y' property. Use Tailwind class 'space-y-*' in HTML instead. */
+    /* space-y: 0.75rem; */ /* Tailwind class equivalent */
 }
 .info-list li {
     /* display: flex; */ /* Let flex handle alignment */
@@ -362,7 +368,13 @@ h1, h2, h3, h4, h5, h6 {
     position: relative; /* For potential custom bullets */
     font-size: 0.95rem;
     min-height: 1.5rem; /* Ensure consistent height */
+    /* Add margin-bottom for spacing if not using Tailwind's space-y in HTML */
+     margin-bottom: 0.75rem; /* Equivalent to space-y-3 */
 }
+.info-list li:last-child {
+    margin-bottom: 0; /* Remove margin from last item */
+}
+
 .info-list li i, .info-list li svg { /* Icon styling within list */
     font-size: 1rem;
     width: 1.25rem; /* 20px */
@@ -437,19 +449,25 @@ h1, h2, h3, h4, h5, h6 {
     flex-shrink: 0;
 }
 
-/* 11. FAQ Section Styles (NEW) */
+/* 11. FAQ Section Styles (Updated for JS dynamic height) */
 .faq-item .faq-answer {
-    max-height: 0;
+    max-height: 0; /* Start closed */
     overflow: hidden;
-    transition: max-height 0.5s ease-in-out; /* Smooth transition */
+    transition: max-height 0.5s ease-in-out; /* Smooth transition for height */
 }
 
+/* REMOVED: Fixed max-height rule. JS now sets dynamic max-height based on scrollHeight.
 .faq-item.active .faq-answer {
-    max-height: 500px; /* Adjust if answers are very long */
+     max-height: 500px;
 }
+*/
 
 .faq-item.active .faq-question i {
-    transform: rotate(180deg);
+    transform: rotate(180deg); /* Rotate chevron down when active */
+}
+/* Ensure chevron icon transition */
+.faq-question i {
+    transition: transform 0.3s ease-in-out;
 }
 
 
@@ -464,7 +482,7 @@ h1, h2, h3, h4, h5, h6 {
 .contact-link {
     color: var(--text-dark);
     transition: color 0.3s ease;
-    word-break: break-all; /* Break long emails/links */
+    word-break: break-all; /* Break long emails/links if needed */
 }
 .contact-link:hover {
     color: var(--primary-purple);
@@ -618,19 +636,25 @@ textarea.form-input:focus {
         padding-top: 4rem; /* 64px */
         padding-bottom: 4rem; /* 64px */
     }
-    .hero-section {
+     /* Targeting the actual hero section via its gradient class */
+    .hero-gradient-bg {
         padding-top: 6rem; /* More padding top for hero on mobile */
     }
 
+
     /* Stack columns in hero and about sections */
-    .hero-section .flex-col,
-    .about-section .flex-col {
-        /* Tailwind handles stacking, but ensure text alignment */
+    /* Tailwind handles stacking via md:flex-row, text alignment needs adjustment */
+     section .container > .flex-col { /* Target direct children flex containers in sections */
         text-align: center;
-    }
-    .hero-section .justify-start {
+     }
+     section .container > .flex-col .md\:text-left { /* Override text-left for mobile */
+        text-align: center;
+     }
+     section .container > .flex-col .md\:justify-start { /* Override justify-start for mobile */
         justify-content: center;
-    }
+     }
+     /* More specific overrides might be needed depending on structure */
+
 
     /* Adjust heading sizes */
     h1 { font-size: 2.5rem; } /* 40px */
@@ -643,16 +667,20 @@ textarea.form-input:focus {
     }
 
     /* Adjust footer layout */
-    footer .flex-col {
-         gap: 1.5rem; /* Add gap between stacked footer items */
+    footer .container > .flex-col { /* Target direct children flex containers in footer */
+        gap: 1.5rem; /* Add gap between stacked footer items */
+        /* text-align: center !important; */ /* Let items center themselves */
     }
+    /* Ensure footer text below HR is centered */
      footer .text-center {
-         text-align: center !important; /* Ensure footer text is centered */
+        text-align: center !important;
      }
 
-     /* Ensure map placeholder maintains aspect ratio */
+
+     /* Ensure map placeholder maintains aspect ratio (if used) */
      .map-placeholder img {
          height: 300px; /* Adjust height for mobile */
+         object-fit: cover; /* Ensure image covers area */
      }
      /* Ensure iframe map maintains aspect ratio */
      section#contacto iframe {
@@ -670,7 +698,8 @@ textarea.form-input:focus {
      #back-to-top {
          bottom: 1rem;
          left: 1rem;
-         width: 3rem;
-         height: 3rem;
+         width: 3rem; /* 48px */
+         height: 3rem; /* 48px */
      }
 }
+

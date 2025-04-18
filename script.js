@@ -311,8 +311,3 @@ document.addEventListener('DOMContentLoaded', () => {
     // This is more efficient than adding a listener to each link individually
     document.body.addEventListener('click', handleSmoothScroll);
 });
-```
-
-He actualizado el código en el documento. Como mencioné, los cambios principales están en `setupMobileMenu` y `handleSmoothScroll`, donde ya no se manipula la clase `translate-x-full`.
-
-Por favor, reemplaza el contenido de tu archivo `script.js` con este código actualizado. Luego, prueba la funcionalidad del menú móvil (abrirlo con el botón de hamburguesa, cerrarlo con la 'X' y verificar que se cierre automáticamente después de hacer clic en un enlace del menú) para asegurarte de que todo funcione como se espe
