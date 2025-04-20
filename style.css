@@ -92,7 +92,10 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Buttons */
 .btn-primary {
-    display: inline-block;
+    /* Changed to inline-flex and added centering */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--gradient-primary);
     color: var(--text-light);
     transition: all 0.3s ease;
@@ -102,6 +105,7 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     border: none;
     cursor: pointer;
+    text-align: center; /* Ensure text itself is centered if it wraps */
 }
 
 .btn-primary:hover {
@@ -112,6 +116,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-secondary {
     display: inline-flex; /* Use flex for icon alignment */
     align-items: center;
+    justify-content: center; /* Added for consistency */
     padding: 0.75rem 1.5rem; /* 12px 24px */
     background-color: var(--bg-light);
     border: 2px solid var(--primary-purple);
@@ -120,6 +125,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    text-align: center; /* Ensure text itself is centered if it wraps */
 }
 
 .btn-secondary:hover {
@@ -304,7 +310,7 @@ h1, h2, h3, h4, h5, h6 {
     gap: 0.25rem; /* Smaller gap now */
 }
 
-.currency-icon {
+.currency-icon { /* Only used for hover effect now */
     font-size: 1.1rem;
     transition: transform 0.3s ease;
 }
@@ -350,7 +356,6 @@ h1, h2, h3, h4, h5, h6 {
 .info-list {
     list-style: none;
     padding-left: 0; /* Remove default padding */
-    /* space-y: 0.75rem; */ /* Removed - Use Tailwind class 'space-y-3' in HTML on ul */
 }
 .info-list li {
     align-items: center;
@@ -424,10 +429,6 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
     transition: max-height 0.5s ease-in-out; /* Smooth transition */
 }
-
-/* .faq-item.active .faq-answer { */
-    /* max-height is set dynamically by JS */
-/* } */
 
 .faq-item.active .faq-question i {
     transform: rotate(180deg);
@@ -666,3 +667,640 @@ footer img[alt*="Footer"] {
          height: 3rem;
      }
 }
+```
+
+**2. Archivo HTML (`index.html`):** (Contexto, sin cambios en este paso)
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dra. Hanoi Yánez González | Ginecóloga-Obstetra Especialista Infanto-Juvenil</title>
+    <meta name="description" content="Dra. Hanoi Yánez González, médico especialista en Ginecología y Obstetricia con diplomado en atención infanto-juvenil. Ofrece servicios de consulta presencial en el Centro Médico El Valle, Isla Margarita, así como consultas en línea y a domicilio.">
+
+    <script src="https://cdn.tailwindcss.com"></script> <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="icon" href="https://raw.githubusercontent.com/elsantin/dra.hanoi.online/main/images/logo.png" type="image/png">
+
+</head>
+<body class="bg-gray-50"> <nav class="nav-container py-4 w-full fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto flex items-center justify-between px-4">
+            <div class="flex items-center">
+                <img src="https://raw.githubusercontent.com/elsantin/dra.hanoi.online/main/images/logo.png" alt="Logo Dra. Hanoi" class="h-12 md:h-16 mr-3" onerror="this.src='https://placehold.co/64x64/d8bfd8/4b0082?text=Logo'; this.onerror=null;">
+                <div>
+                    <h1 class="text-lg md:text-xl font-semibold text-gray-800">Dra. Hanoi Yánez González</h1>
+                    <p class="text-xs md:text-sm text-gray-600">Ginecóloga-Obstetra |<br>Especialista Infanto-Juvenil</p>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
+                <a href="#sobre-mi" class="nav-link smooth-scroll-link text-gray-700 hover:text-purple-600">Sobre mí</a> <a href="#servicios" class="nav-link smooth-scroll-link text-gray-700 hover:text-purple-600">Servicios</a>
+                <a href="#consultas" class="nav-link smooth-scroll-link text-gray-700 hover:text-purple-600">Consultas</a>
+                <a href="#testimonios" class="nav-link smooth-scroll-link text-gray-700 hover:text-purple-600">Testimonios</a>
+                <a href="#faq" class="nav-link smooth-scroll-link text-gray-700 hover:text-purple-600">FAQ</a>
+                <a href="#contacto" class="nav-link smooth-scroll-link text-gray-700 hover:text-purple-600">Contacto</a>
+                <a href="https://wa.me/584140875986" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                    <i class="fab fa-whatsapp mr-2"></i> Agendar Cita
+                </a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-gray-800 focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[1000] flex flex-col items-center justify-center transition-transform duration-300 ease-in-out transform translate-x-full md:hidden">
+        <button id="close-menu" class="absolute top-5 right-5 text-3xl text-gray-700 hover:text-purple-600">×</button>
+        <div class="flex flex-col space-y-8 text-center">
+             <a href="#sobre-mi" class="mobile-nav-link smooth-scroll-link text-xl text-gray-700 hover:text-purple-600">Sobre mí</a>
+            <a href="#servicios" class="mobile-nav-link smooth-scroll-link text-xl text-gray-700 hover:text-purple-600">Servicios</a>
+            <a href="#consultas" class="mobile-nav-link smooth-scroll-link text-xl text-gray-700 hover:text-purple-600">Consultas</a>
+            <a href="#testimonios" class="mobile-nav-link smooth-scroll-link text-xl text-gray-700 hover:text-purple-600">Testimonios</a>
+             <a href="#faq" class="mobile-nav-link smooth-scroll-link text-xl text-gray-700 hover:text-purple-600">FAQ</a>
+            <a href="#contacto" class="mobile-nav-link smooth-scroll-link text-xl text-gray-700 hover:text-purple-600">Contacto</a>
+            <a href="https://wa.me/584140875986" target="_blank" rel="noopener noreferrer" class="btn-primary inline-block mx-auto mt-4">
+                <i class="fab fa-whatsapp mr-2"></i> Agendar Cita
+            </a>
+        </div>
+    </div>
+
+    <section class="pt-32 pb-20 md:pt-40 md:pb-24 px-4 hero-gradient-bg">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="md:w-1/2 text-center md:text-left">
+                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                    <span class="gradient-text">Tu bienestar</span> es mi prioridad!
+                </h1>
+                <p class="text-lg mb-8 text-gray-700 max-w-xl mx-auto md:mx-0">
+                    Atención ginecológica integral con un enfoque holístico en todas las etapas de la vida de la mujer. Única especialista en atención infanto-juvenil en la Isla de Margarita.
+                </p>
+                <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                    <a href="#servicios" class="btn-primary smooth-scroll-link inline-flex items-center justify-center">
+                        Conoce los Servicios
+                    </a>
+                    <a href="https://wa.me/584140875986" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+                        <i class="fab fa-whatsapp mr-2 text-xl"></i>
+                        Contáctame
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative w-full max-w-sm md:max-w-md">
+                     <img src="https://raw.githubusercontent.com/elsantin/dra.hanoi.online/main/images/main-profile.jpg" alt="Dra. Hanoi Yánez González - Foto Principal" class="doctor-image w-full rounded-3xl shadow-2xl z-0" onerror="this.src='https://placehold.co/400x450/d8bfd8/4b0082?text=Dra.+Hanoi'; this.onerror=null;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sobre-mi" class="py-20 section-gradient-1"> <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                     <img src="https://raw.githubusercontent.com/elsantin/dra.hanoi.online/main/images/5.png" alt="Dra. Hanoi Yánez González en consulta" class="doctor-image w-full max-w-md mx-auto rounded-3xl" onerror="this.src='https://placehold.co/400x450/98fb98/006400?text=Dra.+Hanoi+Consulta'; this.onerror=null;">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 gradient-text">Sobre mí</h2>
+                    <p class="mb-4 text-lg text-gray-700">
+                        Soy Hanoi Yánez González, médico especialista en Obstetricia y Ginecología, egresada de la Universidad Central de Venezuela (UCV) y con diplomado en Ginecología Infanto-Juvenil.
+                    </p>
+                    <p class="mb-4 text-lg text-gray-700">
+                        Como venezolana y amante del yoga, mi enfoque médico es holístico, centrado en el bienestar integral de mis pacientes. Mi filosofía se basa en entender que cada mujer es única y merece una atención personalizada.
+                    </p>
+                    <p class="mb-6 text-lg text-gray-700">
+                        Mi consulta ofrece atención personalizada y aborda aspectos ginecológicos, reproductivos, nutricionales, emocionales y afectivos. Mi objetivo es educar sobre promoción de salud y prevención de enfermedades, acompañando en el proceso de embarazo y en la búsqueda de un estilo de vida saludable.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        <div class="badge">
+                            <i class="fas fa-graduation-cap text-purple-600 text-xl"></i>
+                            <span>Especialista UCV</span>
+                        </div>
+                        <div class="badge">
+                            <i class="fas fa-certificate text-purple-600 text-xl"></i>
+                            <span>Diplomado Infanto-Juvenil</span>
+                        </div>
+                        <div class="badge">
+                            <i class="fas fa-heart text-purple-600 text-xl"></i>
+                            <span>Enfoque Holístico</span>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <blockquote class="quote">
+                            <p>"Tu alma es como un jardín. Debes cultivarlo con amor y atención."</p>
+                            <cite>- Rumi, Poeta y místico persa</cite>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicios" class="py-20 section-gradient-2">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Mis Servicios</h2>
+                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Brindo atención integral para todas tus necesidades ginecológicas y obstétricas
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card bg-white p-8 hover-lift text-center sm:text-left">
+                    <div class="service-icon-wrapper mx-auto sm:mx-0"> <i class="fas fa-venus service-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Salud sexual y reproductiva</h3>
+                    <p class="text-gray-600 mb-4">
+                        Identificación temprana de VPH y lesiones pre-invasivas del cáncer de cuello de útero, estudio de pareja infértil, asesoramiento y selección de métodos anticonceptivos ideales para ti.
+                    </p>
+                    <a href="#contacto" class="service-link smooth-scroll-link inline-block"> <span>Saber más</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <div class="card bg-white p-8 hover-lift text-center sm:text-left">
+                    <div class="service-icon-wrapper mx-auto sm:mx-0"> <i class="fas fa-baby service-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Atención durante el embarazo</h3>
+                    <p class="text-gray-600 mb-4">
+                        Atención prenatal de calidad con un enfoque humano. Mi objetivo es asegurarme de que cada paciente se sienta cómoda y segura durante todo el proceso del embarazo y el parto.
+                    </p>
+                     <a href="#contacto" class="service-link smooth-scroll-link inline-block"> <span>Saber más</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                 <div class="card bg-white p-8 hover-lift text-center sm:text-left">
+                    <div class="service-icon-wrapper mx-auto sm:mx-0"> <i class="fas fa-heart-pulse service-icon"></i> </div>
+                    <h3 class="text-xl font-bold mb-4">Operaciones ginecológicas</h3>
+                    <p class="text-gray-600 mb-4">
+                        Realizo operaciones ginecológicas como miomectomías, histerectomías y curas de prolapsos con cuidado y profesionalismo para garantizar tu seguridad y bienestar.
+                    </p>
+                     <a href="#contacto" class="service-link smooth-scroll-link inline-block"> <span>Saber más</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                 <div class="card bg-white p-8 hover-lift text-center sm:text-left">
+                    <div class="service-icon-wrapper mx-auto sm:mx-0"> <i class="fas fa-child service-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Ginecología Infanto-Juvenil</h3>
+                    <p class="text-gray-600 mb-4">
+                        Como única especialista en atención infanto-juvenil en Isla Margarita, ofrezco atención especializada para niñas y adolescentes en un ambiente de confianza y seguridad.
+                    </p>
+                     <a href="#contacto" class="service-link smooth-scroll-link inline-block"> <span>Saber más</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                 <div class="card bg-white p-8 hover-lift text-center sm:text-left">
+                    <div class="service-icon-wrapper mx-auto sm:mx-0"> <i class="fas fa-stethoscope service-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Consulta ginecológica integral</h3>
+                    <p class="text-gray-600 mb-4">
+                        Abordaje completo de la salud femenina, incluyendo chequeos preventivos, tratamiento de infecciones, trastornos menstruales y orientación sobre la etapa menopáusica.
+                    </p>
+                    <a href="#contacto" class="service-link smooth-scroll-link inline-block"> <span>Saber más</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                 <div class="card bg-white p-8 hover-lift text-center sm:text-left">
+                    <div class="service-icon-wrapper mx-auto sm:mx-0"> <i class="fas fa-spa service-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Bienestar integral</h3>
+                    <p class="text-gray-600 mb-4">
+                        Orientación nutricional, emocional y física para alcanzar un equilibrio completo en tu salud, promoviendo hábitos saludables y prácticas de autocuidado.
+                    </p>
+                     <a href="#contacto" class="service-link smooth-scroll-link inline-block"> <span>Saber más</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="consultas" class="py-20 section-gradient-1">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Modalidades de Consulta</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Elige la modalidad que mejor se adapte a tus necesidades
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card bg-white p-8 consultation-card hover-lift flex flex-col">
+                    <div class="flex justify-center mb-6">
+                        <i class="fas fa-user-md consultation-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Consulta Presencial</h3>
+                    <p class="text-gray-600 mb-6 text-center flex-grow">
+                        Atención médica personalizada en mi consultorio del Centro Médico El Valle. Exámenes físicos, diagnóstico y tratamiento directo.
+                    </p>
+                    <div class="mt-auto">
+                        <div class="consultation-price">
+                            <span class="text-2xl font-bold gradient-text">$50</span>
+                            </div>
+                        <a href="https://wa.me/584140875986" target="_blank" rel="noopener noreferrer" class="btn-primary w-full flex items-center justify-center mt-4">
+                            <i class="fas fa-calendar-alt mr-2"></i>
+                            Agendar cita
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card bg-white p-8 consultation-card hover-lift flex flex-col recommended-card">
+                     <div class="recommended-badge">
+                        Nuevo
+                    </div>
+                    <div class="flex justify-center mb-6">
+                        <i class="fas fa-laptop-medical consultation-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Consulta Online</h3>
+                    <p class="text-gray-600 mb-6 text-center flex-grow">
+                        Desde la comodidad de tu hogar. Ideal para seguimientos, consultas no urgentes y pacientes de otras localidades.
+                    </p>
+                    <div class="mt-auto">
+                         <div class="consultation-price">
+                            <span class="text-2xl font-bold gradient-text">$40</span>
+                            </div>
+                        <a href="https://wa.me/584140875986" target="_blank" rel="noopener noreferrer" class="btn-primary w-full flex items-center justify-center mt-4">
+                            <i class="fas fa-calendar-alt mr-2"></i>
+                            Agendar cita
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card bg-white p-8 consultation-card hover-lift flex flex-col">
+                    <div class="flex justify-center mb-6">
+                        <i class="fas fa-house-medical consultation-icon"></i> </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Consulta a Domicilio</h3>
+                    <p class="text-gray-600 mb-6 text-center flex-grow">
+                        Para emergencias o pacientes con movilidad reducida. Atención médica completa en la comodidad de tu hogar.
+                    </p>
+                    <div class="mt-auto">
+                         <div class="consultation-price">
+                            <span class="text-2xl font-bold gradient-text">$65</span>
+                           </div>
+                        <a href="https://wa.me/584140875986" target="_blank" rel="noopener noreferrer" class="btn-primary w-full flex items-center justify-center mt-4">
+                            <i class="fas fa-calendar-alt mr-2"></i>
+                            Agendar cita
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 bg-white rounded-2xl p-8 shadow-lg">
+                <h3 class="text-2xl font-bold mb-6 text-center">Horarios y Pagos</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="info-title">
+                            <i class="far fa-clock info-icon"></i>
+                            Horario de Consultas
+                        </h4>
+                        <ul class="info-list space-y-3">
+                             <li><span>Lunes a Viernes:</span> <span class="font-medium">9:00 am - 6:00 pm</span></li>
+                            <li class="text-gray-500"><span>Excepto Miércoles tarde:</span> <span>No disponible</span></li>
+                            <li class="text-gray-500"><span>Sábados y Domingos:</span> <span>No disponible</span></li>
+                        </ul>
+                        <p class="mt-4 text-purple-600 italic text-sm">
+                            * Preferencia por consultas en la tarde.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="info-title">
+                            <i class="fas fa-credit-card info-icon"></i>
+                            Métodos de Pago Aceptados
+                        </h4>
+                        <ul class="info-list space-y-3">
+                             <li class="flex items-center"><i class="fas fa-money-bill-1-wave text-green-600 mr-2 w-5 text-center"></i><span>Efectivo (USD/EUR)</span></li>
+                             <li class="flex items-center"><i class="fas fa-mobile-screen-button text-blue-600 mr-2 w-5 text-center"></i><span>Transferencias / Pago Móvil (Bs.)</span></li>
+                             <li class="flex items-center"><i class="fab fa-paypal text-blue-800 mr-2 w-5 text-center"></i><span>PayPal</span></li>
+                             <li class="flex items-center">
+                                 <svg role="img" viewBox="0 0 24 24" class="mr-2 h-5 w-5 flex-shrink-0" aria-labelledby="zelleTitleFinal">
+                                     <title id="zelleTitleFinal">Logo de Zelle</title>
+                                     <rect width="24" height="24" rx="4" fill="#6D28D9"/>
+                                     <path d="M10.17 15.978h3.652L10.17 8.022h3.652M12 5.5l-1.522 2.522H12h1.522L12 5.5zm0 13l1.522-2.522H12h-1.522L12 18.5z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
+                                 </svg>
+                                 <span>Zelle</span>
+                             </li>
+                             <li class="flex items-center">
+                                 <svg role="img" viewBox="0 0 24 24" class="mr-2 h-5 w-5 flex-shrink-0" aria-labelledby="binanceTitleFinal">
+                                     <title id="binanceTitleFinal">Logo de Binance</title>
+                                     <path fill="#F0B90B" d="M16.624 11.997l-4.626 4.625-4.624-4.625 4.624-4.627 4.626 4.627zm7.376-.006l-4.625 4.625L24 11.997l-4.625-4.626 4.625-4.625L24 7.37l-4.625 4.62zm-7.376 7.376l4.626-4.625 4.625 4.625-4.625 4.625-4.626-4.625zm-7.376-7.376l4.625-4.627-4.625-4.625L0 7.37l4.625 4.626-4.625 4.625L0 16.62l4.625-4.625zm7.376-7.376l-4.626 4.627L7.37 0l4.625 4.625 4.625-4.625L21.244 0l-4.62 4.62zM7.37 24l4.625-4.625 4.626 4.625-4.626 4.625L7.37 24z"></path>
+                                 </svg>
+                                 <span>Binance (USDT)</span>
+                             </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonios" class="py-20 section-gradient-2">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Lo que dicen mis pacientes</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Experiencias reales de quienes ya han confiado en mi atención médica
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                <div class="testimonial card bg-white p-8 rounded-2xl shadow-lg flex flex-col">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6 relative z-10 flex-grow">
+                        "Me encantó la consulta con la Doctora Hanoi. Fue muy profesional y cálida al atenderme. No sólo me hizo sentir súper cómoda, sino que se tomó su tiempo para responder todas mis inquietudes y darme una explicación detallada de las cosas. Esto me dio mucha claridad y tranquilidad. Agradecida siempre"
+                    </p>
+                    <div class="testimonial-author mt-auto">
+                        <img src="https://raw.githubusercontent.com/elsantin/dra.hanoi.online/main/images/lisett.png" alt="Foto de Lisett Correa" class="w-12 h-12 rounded-full object-cover mr-4 flex-shrink-0" onerror="this.src='https://placehold.co/48x48/d8bfd8/4b0082?text=L'; this.onerror=null;">
+                        <div class="ml-0"> <h4 class="font-semibold">Lisett Correa</h4>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="testimonial card bg-white p-8 rounded-2xl shadow-lg flex flex-col">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6 relative z-10 flex-grow">
+                        "La doctora Hanoi es un 10 de 10. La mejor experiencia médica que he tenido tanto por su profesionalismo como por el buen trato, amabilidad y respeto con el que me atendió."
+                    </p>
+                    <div class="testimonial-author mt-auto">
+                         <img src="https://raw.githubusercontent.com/elsantin/dra.hanoi.online/main/images/yus.jpg" alt="Foto de Yus Mejías" class="w-12 h-12 rounded-full object-cover mr-4 flex-shrink-0" onerror="this.src='https://placehold.co/48x48/d8bfd8/4b0082?text=Y'; this.onerror=null;">
+                        <div class="ml-0">
+                            <h4 class="font-semibold">Yus Mejías</h4>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="testimonial card bg-white p-8 rounded-2xl shadow-lg flex flex-col">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6 relative z-10 flex-grow">
+                        "Aunque por motivos de viaje no siempre puedo acudir a las consultas presenciales, la doctora Hanoi me atiende vía online. La consulta de la doctora Hanoi es una consulta integral en las que se preocupa por atender todos los aspectos posibles para encaminar a la paciente hacia un estado de salud óptimo, es una especialista dedicada a atender todas las dudas y consultas posibles."
+                    </p>
+                    <div class="testimonial-author mt-auto">
+                        <img src="https://raw.githubusercontent.com/elsantin/dra.hanoi.online/main/images/georgina.jpg" alt="Foto de Georgina Vall" class="w-12 h-12 rounded-full object-cover mr-4 flex-shrink-0" onerror="this.src='https://placehold.co/48x48/d8bfd8/4b0082?text=G'; this.onerror=null;">
+                        <div class="ml-0">
+                            <h4 class="font-semibold">Georgina Vall</h4>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="testimonial card bg-white p-8 rounded-2xl shadow-lg flex flex-col">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6 relative z-10 flex-grow">
+                        "Me acompañaste, me cuidaste, me diste la confianza que necesitaba en el proceso más difícil por el cual una mujer puede pasar. Sin ninguna duda y con los ojos cerrados recomiendo tu profesionalismo. Con mucha paciencia y dulzura me has guiado en cada paso. Feliz y agradecida voy a estar contigo, toda mi vida."
+                    </p>
+                    <div class="testimonial-author mt-auto">
+                         <img src="https://raw.githubusercontent.com/elsantin/dra.hanoi.online/main/images/daniela.png" alt="Foto de Daniela Romero" class="w-12 h-12 rounded-full object-cover mr-4 flex-shrink-0" onerror="this.src='https://placehold.co/48x48/d8bfd8/4b0082?text=D'; this.onerror=null;">
+                        <div class="ml-0">
+                            <h4 class="font-semibold">Daniela Romero</h4>
+                            </div>
+                    </div>
+                </div>
+
+                </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Preguntas Frecuentes</h2>
+                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Respuestas a algunas de las dudas más comunes de mis pacientes.
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto space-y-4">
+                <div class="faq-item border rounded-lg overflow-hidden">
+                    <button class="faq-question w-full flex justify-between items-center text-left p-5 bg-purple-50 hover:bg-purple-100 transition">
+                        <span class="font-semibold text-lg text-purple-800">¿Necesito pedir cita previa?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out"> <p class="p-5 text-gray-700 bg-white border-t">
+                            Sí, la atención en el consultorio es exclusivamente con cita previa para garantizar el tiempo y la dedicación necesaria para cada paciente. Puedes agendar tu cita a través de WhatsApp o llamada telefónica.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item border rounded-lg overflow-hidden">
+                    <button class="faq-question w-full flex justify-between items-center text-left p-5 bg-purple-50 hover:bg-purple-100 transition">
+                        <span class="font-semibold text-lg text-purple-800">¿Qué debo llevar a mi primera consulta?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out"> <p class="p-5 text-gray-700 bg-white border-t">
+                            Es recomendable traer tu documento de identidad. Si tienes informes médicos anteriores, resultados de exámenes, o estás tomando alguna medicación, por favor tráelos también. Si es una consulta ginecológica, recuerda cuándo fue tu última menstruación.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item border rounded-lg overflow-hidden">
+                    <button class="faq-question w-full flex justify-between items-center text-left p-5 bg-purple-50 hover:bg-purple-100 transition">
+                        <span class="font-semibold text-lg text-purple-800">¿Aceptan seguros médicos?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out"> <p class="p-5 text-gray-700 bg-white border-t">
+                            Actualmente, no trabajamos directamente con compañías de seguros. Sin embargo, te entregamos un informe médico detallado y factura fiscal que puedes presentar a tu seguro para solicitar el reembolso según las condiciones de tu póliza.
+                        </p>
+                    </div>
+                </div>
+
+                 <div class="faq-item border rounded-lg overflow-hidden">
+                    <button class="faq-question w-full flex justify-between items-center text-left p-5 bg-purple-50 hover:bg-purple-100 transition">
+                        <span class="font-semibold text-lg text-purple-800">¿Qué métodos de pago aceptan?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out"> <p class="p-5 text-gray-700 bg-white border-t">
+                            Aceptamos efectivo (Dólares o Euros), transferencias o pago móvil en Bolívares (Bs.), PayPal, Zelle y Binance (USDT). Puedes consultar los detalles al momento de agendar tu cita.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section id="contacto" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Contáctame</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Estoy aquí para atender tus necesidades de salud con profesionalismo y calidez
+                </p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-1/2">
+                    <div class="bg-purple-50 p-8 rounded-2xl shadow-md h-full">
+                        <h3 class="text-2xl font-bold mb-6">Información de Contacto</h3>
+
+                        <div class="contact-info-item">
+                            <h4 class="info-title"><i class="fas fa-map-marker-alt info-icon"></i>Ubicación</h4>
+                            <p class="info-text text-sm">
+                                Centro Médico El Valle, Planta Baja, Consultorio 5<br>
+                                Av. Rafael Tovar, El Valle Del Espíritu Santo<br>
+                                Nueva Esparta<br>
+                                Venezuela 6308
+                            </p>
+                        </div>
+
+                        <div class="contact-info-item">
+                            <h4 class="info-title"><i class="fas fa-phone-alt info-icon"></i>Teléfonos</h4>
+                            <p class="info-text text-sm">
+                                <a href="tel:+584140875986" class="contact-link">+58 414 0875986</a><br>
+                                <a href="tel:+584125305986" class="contact-link">+58 412 5305986</a>
+                            </p>
+                        </div>
+
+                        <div class="contact-info-item">
+                            <h4 class="info-title"><i class="fas fa-envelope info-icon"></i>Correo Electrónico</h4>
+                             <p class="info-text text-sm">
+                                <a href="mailto:yanezhanoi@gmail.com" class="contact-link">yanezhanoi@gmail.com</a>
+                            </p>
+                        </div>
+
+                        <div class="contact-info-item">
+                             <h4 class="info-title"><i class="far fa-clock info-icon"></i>Horario</h4>
+                              <p class="info-text text-sm">
+                                Lunes a viernes: 9:00 am - 6:00 pm<br> <span class="text-gray-500 text-sm">(Excepto miércoles tarde)</span><br>
+                                <span class="text-gray-500 text-sm">Sábados y domingos: No disponible</span>
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="info-title"><i class="fas fa-hashtag info-icon"></i>Redes Sociales</h4>
+                            <div class="flex space-x-4 mt-2 pl-6">
+                                <a href="https://www.instagram.com/doctorahanoi/" target="_blank" rel="noopener noreferrer" class="social-icon instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="https://wa.me/584140875986" target="_blank" rel="noopener noreferrer" class="social-icon whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="social-icon facebook"> <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2">
+                     <form id="contact-form" class="bg-white p-8 rounded-2xl shadow-lg h-full">
+                        <h3 class="text-2xl font-bold mb-6">Envíame un mensaje</h3>
+
+                        <div class="mb-5">
+                            <label for="name" class="form-label">Nombre completo</label>
+                            <input type="text" id="name" name="name" class="form-input" required>
+                        </div>
+
+                        <div class="mb-5">
+                            <label for="email" class="form-label">Correo electrónico</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+
+                        <div class="mb-5">
+                            <label for="phone" class="form-label">Teléfono (Opcional)</label>
+                            <input type="tel" id="phone" name="phone" class="form-input">
+                        </div>
+
+                        <div class="mb-5">
+                            <label for="service" class="form-label">Tipo de consulta</label>
+                            <select id="service" name="service" class="form-input">
+                                <option value="">Seleccionar...</option>
+                                <option value="Consulta general">Consulta general</option>
+                                <option value="Embarazo">Embarazo</option>
+                                <option value="Infanto-juvenil">Infanto-juvenil</option>
+                                <option value="Consulta online">Consulta online</option>
+                                <option value="Visita a domicilio">Visita a domicilio</option>
+                                <option value="Operación ginecológica">Operación ginecológica</option>
+                                <option value="Otra">Otra</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="message" class="form-label">Mensaje</label>
+                            <textarea id="message" name="message" rows="5" class="form-input" required></textarea>
+                        </div>
+
+                        <div>
+                            <button type="submit" class="btn-primary w-full">
+                                Enviar mensaje
+                            </button>
+                            <p id="form-status" class="text-sm mt-4 text-center"></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="mt-16">
+                <h3 class="text-2xl font-bold mb-6 text-center">Ubicación del Consultorio</h3>
+                 <div class="bg-gray-200 p-4 rounded-xl shadow-md overflow-hidden"> <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.809149378034!2d-63.86921689999999!3d10.9777736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c318c26aa25126b%3A0x878e86d5cd0554c3!2sValley%20Medical%20Center!5e0!3m2!1sen!2sus!4v1744931653761!5m2!1sen!2sus" class="w-full rounded-lg" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 footer-gradient-bg text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row md:justify-between items-center text-center md:text-left">
+                <div class="mb-8 md:mb-0 flex flex-col md:flex-row items-center">
+                     <img src="https://raw.githubusercontent.com/elsantin/dra.hanoi.online/main/images/logo.png" alt="Logo Dra. Hanoi Footer" class="h-16 mb-4 md:mb-0 md:mr-4" onerror="this.src='https://placehold.co/64x64/ffffff/cccccc?text=Logo'; this.style.opacity=0.7; this.onerror=null;">
+                    <div>
+                        <h3 class="text-xl font-bold">Dra. Hanoi Yánez González</h3>
+                        <p class="text-white text-opacity-80">Ginecóloga-Obstetra | Especialista Infanto-Juvenil</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-8 md:mb-0">
+                    <a href="#sobre-mi" class="footer-link smooth-scroll-link">Sobre mí</a> <a href="#servicios" class="footer-link smooth-scroll-link">Servicios</a>
+                    <a href="#consultas" class="footer-link smooth-scroll-link">Consultas</a>
+                    <a href="#testimonios" class="footer-link smooth-scroll-link">Testimonios</a>
+                     <a href="#faq" class="footer-link smooth-scroll-link">FAQ</a>
+                    <a href="#contacto" class="footer-link smooth-scroll-link">Contacto</a>
+                </div>
+
+                <div class="flex space-x-4">
+                     <a href="https://www.instagram.com/doctorahanoi/" target="_blank" rel="noopener noreferrer" class="social-icon instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://wa.me/584140875986" target="_blank" rel="noopener noreferrer" class="social-icon whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="social-icon facebook"> <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+            </div>
+
+            <hr class="my-8 border-white border-opacity-20">
+
+            <div class="text-center text-white text-opacity-60 text-sm">
+                <p>© <span id="current-year"></span> Dra. Hanoi Yánez González.<br>Todos los derechos reservados.</p>
+                <p class="mt-2">Centro Médico El Valle, Planta Baja, Consultorio 5<br>Av. Rafael Tovar, El Valle Del Espíritu Santo<br>Nueva Esparta<br>Venezuela 6308</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/584140875986" target="_blank" rel="noopener noreferrer" class="whatsapp-float-button" aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+
+    <button id="back-to-top" class="fixed bottom-6 left-6 w-12 h-12 bg-purple-600 rounded-full text-white shadow-lg hover:bg-purple-700 transition z-50 hidden items-center justify-center" aria-label="Volver arriba">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+
+    <script src="script.js"></script> </body>
+</html>
