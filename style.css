@@ -7,15 +7,15 @@
     4. Navigation Styles
     5. Hero Section Styles
     6. About Section Styles
-    7. Services Section Styles (UPDATED)
-    8. Consultation Section Styles (UPDATED)
+    7. Services Section Styles
+    8. Consultation Section Styles
     9. Gallery Section Styles (Removed, but keeping number for consistency)
     10. Testimonials Section Styles
-    11. FAQ Section Styles (Updated for JS dynamic height)
+    11. FAQ Section Styles (Updated for max-height transition)
     12. Contact Section Styles
     13. Footer Styles
-    14. Animations & Effects (UPDATED)
-    15. Responsive Adjustments (UPDATED)
+    14. Animations & Effects
+    15. Responsive Adjustments
 ---------------------------------------------------------------------*/
 
 /* 1. Base Styles & Variables */
@@ -76,26 +76,18 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-gradient-bg {
     background: var(--gradient-hero);
-    background-size: 100% auto; /* Needed for JS parallax */
-    /* background-attachment: fixed; */ /* Alternative for images */
 }
 
 .section-gradient-1 {
     background: var(--gradient-section-1);
-    background-size: 400% 400%; /* For gradient animation */
-    animation: gradientShift 25s ease infinite; /* Apply gradient animation */
 }
 
 .section-gradient-2 {
     background: var(--gradient-section-2);
-    background-size: 400% 400%; /* For gradient animation */
-    animation: gradientShift 25s ease infinite reverse; /* Apply gradient animation (reversed) */
 }
 
 .footer-gradient-bg {
     background: var(--gradient-footer);
-    background-size: 400% 400%; /* For gradient animation */
-    animation: gradientShift 30s ease infinite; /* Apply gradient animation */
 }
 
 /* Buttons */
@@ -197,7 +189,7 @@ h1, h2, h3, h4, h5, h6 {
     transition: transform 0.3s ease-in-out; /* Ensure transition is defined */
 }
 #mobile-menu.open {
-    transform: translateX(0); /* Slides in when 'open' class is added by JS */
+    transform: translateX(0);
 }
 
 .mobile-nav-link {
@@ -246,7 +238,7 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--primary-green);
 }
 
-/* 7. Services Section Styles (UPDATED) */
+/* 7. Services Section Styles */
 .service-icon-wrapper {
     display: flex;
     align-items: center;
@@ -257,9 +249,6 @@ h1, h2, h3, h4, h5, h6 {
     background-color: rgba(138, 43, 226, 0.1); /* Lighter purple */
     margin-bottom: 1.5rem; /* 24px */
     transition: all 0.3s ease;
-    /* Center Service Icon Globally */
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .service-icon {
@@ -278,36 +267,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .service-link {
-    /* display: inline-flex; */ /* Changed to block for centering */
-    display: block; /* Make it block to allow margin auto */
-    width: fit-content; /* Size to content */
-    margin-left: auto; /* Center horizontally */
-    margin-right: auto; /* Center horizontally */
-    align-items: center; /* Keep icon and text aligned if needed */
+    display: inline-flex;
+    align-items: center;
     color: var(--primary-purple);
     font-weight: 600;
     transition: all 0.3s ease;
-    margin-top: 1rem; /* Add some space above the link */
 }
-
-.service-link span, .service-link i {
-    display: inline-block; /* Ensure items inside stay inline */
-    vertical-align: middle; /* Align icon and text */
-}
-
 
 .service-link:hover {
     color: var(--primary-green);
-    transform: translateX(4px); /* Keep hover effect */
+    transform: translateX(4px);
 }
 
-/* Center Service Card Title & Text Globally */
-#servicios .card h3,
-#servicios .card p {
-    text-align: center;
-}
-
-/* 8. Consultation Section Styles (UPDATED) */
+/* 8. Consultation Section Styles */
 .consultation-card {
     position: relative; /* Needed for absolute positioning of badge */
 }
@@ -331,8 +303,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem; /* 16px */
     gap: 0.25rem; /* Smaller gap now */
 }
-
-/* REMOVED: Empty ruleset for .currency-icons */
 
 .currency-icon {
     font-size: 1.1rem;
@@ -377,36 +347,27 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.2rem;
 }
 
-/* General Info List Styles (Applies to Schedule too) */
 .info-list {
     list-style: none;
-    padding-left: 0;
+    padding-left: 0; /* Remove default padding */
+    /* space-y: 0.75rem; */ /* Removed - Use Tailwind class 'space-y-3' in HTML on ul */
 }
 .info-list li {
+    align-items: center;
+    padding-left: 0;
     position: relative;
     font-size: 0.95rem;
-    min-height: 1.5rem; /* Ensure consistent height */
-    margin-bottom: 0.75rem; /* Default spacing */
+    min-height: 1.5rem;
 }
-.info-list li:last-child {
-    margin-bottom: 0; /* Remove margin from last item */
-}
-
-/* --- Specific Alignment for Payment Methods List --- */
-.payment-methods-list li {
-     display: flex;
-     align-items: center;
-}
-
-/* --- Icon styles (removed text-align) --- */
- .info-list li i, .info-list li svg {
+.info-list li i, .info-list li svg {
     font-size: 1rem;
-    width: 1.25rem; /* Keep consistent width */
-    margin-right: 0.5rem;
+    width: 1.25rem; /* 20px */
+    text-align: center;
+    margin-right: 0.5rem; /* 8px */
     flex-shrink: 0;
- }
+}
 .info-list li span {
-    flex-grow: 1; /* Allow text to take remaining space */
+    flex-grow: 1;
 }
 
 
@@ -448,21 +409,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 1.5rem; /* 24px */
 }
 
-.testimonial-avatar { /* Style for the old avatar div, keep for reference */
-    width: 3rem; /* 48px */
-    height: 3rem; /* 48px */
-    border-radius: 50%;
-    background-color: var(--light-purple);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--dark-purple);
-    font-weight: bold;
-    font-size: 1.2rem;
-    flex-shrink: 0; /* Prevent shrinking */
-}
-
-/* Style for the new testimonial images */
 .testimonial-author img {
     width: 3rem; /* 48px */
     height: 3rem; /* 48px */
@@ -472,19 +418,21 @@ h1, h2, h3, h4, h5, h6 {
     flex-shrink: 0;
 }
 
-/* 11. FAQ Section Styles (Updated for JS dynamic height) */
+/* 11. FAQ Section Styles (Updated for max-height transition) */
 .faq-item .faq-answer {
     max-height: 0; /* Start closed */
     overflow: hidden;
-    transition: max-height 0.5s ease-in-out; /* Smooth transition for height */
+    transition: max-height 0.5s ease-in-out; /* Smooth transition */
 }
 
-/* REMOVED: Fixed max-height rule. JS now sets dynamic max-height based on scrollHeight. */
+/* .faq-item.active .faq-answer { */
+    /* max-height is set dynamically by JS */
+/* } */
 
 .faq-item.active .faq-question i {
-    transform: rotate(180deg); /* Rotate chevron down when active */
+    transform: rotate(180deg);
 }
-/* Ensure chevron icon transition */
+/* Ensure icon transition */
 .faq-question i {
     transition: transform 0.3s ease-in-out;
 }
@@ -501,7 +449,7 @@ h1, h2, h3, h4, h5, h6 {
 .contact-link {
     color: var(--text-dark);
     transition: color 0.3s ease;
-    word-break: break-all; /* Break long emails/links if needed */
+    word-break: break-all; /* Break long emails/links */
 }
 .contact-link:hover {
     color: var(--primary-purple);
@@ -590,37 +538,14 @@ textarea.form-input:focus {
     transform: scale(1.1);
 }
 
-/* 14. Animations & Effects (UPDATED) */
-
-/* --- Keyframes for Gradient Shift --- */
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+/* Footer Logo Legibility Enhancement */
+footer img[alt*="Footer"] {
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.7)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+  /* Adjust color (e.g., rgba(200, 200, 200, 0.6)) and blur (e.g., 2px) as needed */
 }
 
-/* --- Keyframes for Button Pulse/Glow --- */
-@keyframes pulseGlow {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-    50% {
-        transform: scale(1.03);
-        box-shadow: 0 6px 20px rgba(138, 43, 226, 0.25); /* Adjusted shadow */
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-}
 
-/* --- Apply Pulse/Glow to specific buttons --- */
-/* Add class 'cta-pulse' to buttons in HTML */
-.cta-pulse {
-    animation: pulseGlow 2.5s infinite ease-in-out;
-}
-
+/* 14. Animations & Effects */
 
 /* Floating animation for decorative elements */
 @keyframes float {
@@ -678,32 +603,26 @@ textarea.form-input:focus {
 }
 
 
-/* 15. Responsive Adjustments (UPDATED) */
+/* 15. Responsive Adjustments */
 @media (max-width: 768px) {
     /* Adjust padding for smaller screens */
     section {
         padding-top: 4rem; /* 64px */
         padding-bottom: 4rem; /* 64px */
     }
-     /* Targeting the actual hero section via its gradient class */
-    .hero-gradient-bg {
+    .hero-section {
         padding-top: 6rem; /* More padding top for hero on mobile */
-        background-position-y: 0 !important; /* Disable JS parallax on mobile */
     }
 
-    /* --- Left-align About Me Text/Quote on Mobile --- */
-     #sobre-mi .container > .flex > div:nth-child(2) { /* Target second div (text block) */
-        text-align: left;
-     }
-     #sobre-mi .quote {
-        text-align: left;
-        margin-left: 0;
-        margin-right: 0;
-        padding-left: 1.5rem;
-     }
-     #sobre-mi .quote p, #sobre-mi .quote cite {
-         text-align: left;
-     }
+    /* Stack columns in hero and about sections */
+    .hero-section .flex-col,
+    .about-section .flex-col {
+        /* Tailwind handles stacking, but ensure text alignment */
+        text-align: center;
+    }
+    .hero-section .justify-start {
+        justify-content: center;
+    }
 
     /* Adjust heading sizes */
     h1 { font-size: 2.5rem; } /* 40px */
@@ -711,24 +630,21 @@ textarea.form-input:focus {
 
     /* Center consultation price details */
     .consultation-price {
-        flex-direction: column;
+        /* flex-direction: column; */ /* Removed - let flex wrap handle */
         gap: 0.5rem;
     }
 
     /* Adjust footer layout */
-    footer .container > .flex-col { /* Target direct children flex containers in footer */
-        gap: 1.5rem; /* Add gap between stacked footer items */
+    footer .flex-col {
+         gap: 1.5rem; /* Add gap between stacked footer items */
     }
-    /* Ensure footer text below HR is centered */
      footer .text-center {
-        text-align: center !important;
+         text-align: center !important; /* Ensure footer text is centered */
      }
 
-
-     /* Ensure map placeholder maintains aspect ratio (if used) */
+     /* Ensure map placeholder maintains aspect ratio */
      .map-placeholder img {
          height: 300px; /* Adjust height for mobile */
-         object-fit: cover; /* Ensure image covers area */
      }
      /* Ensure iframe map maintains aspect ratio */
      section#contacto iframe {
@@ -746,7 +662,7 @@ textarea.form-input:focus {
      #back-to-top {
          bottom: 1rem;
          left: 1rem;
-         width: 3rem; /* 48px */
-         height: 3rem; /* 48px */
+         width: 3rem;
+         height: 3rem;
      }
 }
