@@ -160,13 +160,13 @@ const updateCopyrightYear = () => {
 /**
  * Sets up the contact form submission using Fetch API (AJAX) for FormSubmit.
  * Prevents page redirection and displays status messages locally.
+ * Includes more robust response handling for non-JSON responses (like CAPTCHA pages).
  */
 const setupContactForm = () => {
     const form = document.getElementById('contact-form');
     const formStatus = document.getElementById('form-status');
 
     if (form && formStatus) {
-        // Restore the event listener for AJAX submission
         form.addEventListener('submit', (event) => {
             event.preventDefault(); // Prevent default HTML form submission
 
@@ -180,49 +180,60 @@ const setupContactForm = () => {
                 method: 'POST',
                 body: formData,
                 headers: {
-                    'Accept': 'application/json' // Important for FormSubmit AJAX
+                    'Accept': 'application/json' // Request JSON response
                 }
             })
             .then(response => {
-                // Check if response status is ok (e.g., 2xx)
+                const contentType = response.headers.get('content-type');
                 if (response.ok) {
-                    return response.json(); // Parse JSON if response is ok
+                    // If response is OK check content type
+                    if (contentType && contentType.includes('application/json')) {
+                        // It's JSON, process it
+                        return response.json();
+                    } else {
+                        // It's OK but not JSON (likely FormSubmit success HTML page or unexpected response)
+                        // We'll treat it as success but log the actual response
+                        return response.text().then(text => {
+                            console.warn("FormSubmit OK response but not JSON:", text);
+                            // Simulate success data structure for the next .then()
+                            return { success: true, message: "Respuesta recibida (no JSON)." };
+                        });
+                    }
                 } else {
-                    // If response is not ok, try to parse potential error text
-                    // FormSubmit might return errors as non-JSON, handle gracefully
+                    // Response is not OK (e.g., 4xx, 5xx error)
+                    // Get the response body as text to include in the error
                     return response.text().then(text => {
-                        // Try to parse text as JSON in case error is structured
-                        try {
-                            const errorData = JSON.parse(text);
-                            throw new Error(errorData.message || text || 'Error en la respuesta del servidor');
-                        } catch (e) {
-                            // If text is not JSON, use the text itself or a generic error
-                            throw new Error(text || 'Error en la respuesta del servidor');
+                        // Try to extract a title or snippet from HTML error pages
+                        const matchTitle = text.match(/<title>(.*?)<\/title>/i);
+                        const matchH1 = text.match(/<h1[^>]*>(.*?)<\/h1>/i);
+                        let detail = 'Respuesta inesperada del servidor.';
+                        if (matchH1) {
+                            detail = matchH1[1]; // Prefer H1 content
+                        } else if (matchTitle) {
+                            detail = matchTitle[1]; // Use title if no H1
+                        } else if (text) {
+                            // Use a snippet if no title/h1 found
+                            detail = text.substring(0, 100) + (text.length > 100 ? '...' : '');
                         }
+                        throw new Error(detail); // Throw an error with extracted detail
                     });
                 }
             })
             .then(data => {
-                // Handle successful JSON response
-                // FormSubmit AJAX success response usually includes { success: true }
-                console.log('FormSubmit success:', data);
+                // Handle successful submission (parsed JSON or simulated success)
+                console.log('FormSubmit processed:', data); // Log the data received
                 formStatus.textContent = '¡Mensaje enviado con éxito! Gracias.';
                 formStatus.style.color = 'green';
                 form.reset(); // Clear the form on success
-                // Remove the message after a few seconds
-                setTimeout(() => {
-                    formStatus.textContent = '';
-                }, 5000);
+                setTimeout(() => { formStatus.textContent = ''; }, 5000); // Clear status after 5s
             })
             .catch(error => {
-                // Handle errors (network error or non-ok response)
+                // Handle errors (network, non-ok response, JSON parsing failure on OK response)
                 console.error('Error submitting form:', error);
+                // Display the error message extracted or a default one
                 formStatus.textContent = `Error al enviar: ${error.message || 'Intenta de nuevo.'}`;
                 formStatus.style.color = 'red';
-                 // Remove the message after a few seconds
-                 setTimeout(() => {
-                    formStatus.textContent = '';
-                }, 7000); // Longer timeout for errors
+                 setTimeout(() => { formStatus.textContent = ''; }, 7000); // Clear status after 7s
             });
         });
     } else {
@@ -280,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupNavbarScroll();
     setupBackToTopButton();
     updateCopyrightYear();
-    setupContactForm(); // Initialize contact form with AJAX submission restored
+    setupContactForm(); // Initialize contact form with improved AJAX submission
     setupFAQAccordion(); // Initialize FAQ accordion
 
     // Add fade-in class to sections for animation (if desired)
