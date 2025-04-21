@@ -158,14 +158,17 @@ const updateCopyrightYear = () => {
 };
 
 /**
- * Sets up the contact form submission using Fetch API (AJAX) for FormSubmit.
- * Prevents page redirection and displays status messages locally.
+ * Sets up the contact form.
+ * NOTE: AJAX functionality is temporarily commented out to test standard HTML submission
+ * for FormSubmit activation.
  */
 const setupContactForm = () => {
     const form = document.getElementById('contact-form');
-    const formStatus = document.getElementById('form-status');
+    const formStatus = document.getElementById('form-status'); // We still might need this later
 
     if (form && formStatus) {
+        console.log("Contact form setup: AJAX submission temporarily disabled for activation test.");
+        /* --- AJAX Submission Logic (Commented Out) ---
         form.addEventListener('submit', (event) => {
             event.preventDefault(); // Prevent default HTML form submission
 
@@ -188,14 +191,11 @@ const setupContactForm = () => {
                     return response.json(); // Parse JSON if response is ok
                 } else {
                     // If response is not ok, try to parse potential error text
-                    // FormSubmit might return errors as non-JSON, handle gracefully
                     return response.text().then(text => {
-                        // Try to parse text as JSON in case error is structured
                         try {
                             const errorData = JSON.parse(text);
                             throw new Error(errorData.message || text || 'Error en la respuesta del servidor');
                         } catch (e) {
-                            // If text is not JSON, use the text itself or a generic error
                             throw new Error(text || 'Error en la respuesta del servidor');
                         }
                     });
@@ -203,27 +203,21 @@ const setupContactForm = () => {
             })
             .then(data => {
                 // Handle successful JSON response
-                // FormSubmit AJAX success response usually includes { success: true }
                 console.log('FormSubmit success:', data);
                 formStatus.textContent = '¡Mensaje enviado con éxito! Gracias.';
                 formStatus.style.color = 'green';
                 form.reset(); // Clear the form on success
-                // Remove the message after a few seconds
-                setTimeout(() => {
-                    formStatus.textContent = '';
-                }, 5000);
+                setTimeout(() => { formStatus.textContent = ''; }, 5000);
             })
             .catch(error => {
                 // Handle errors (network error or non-ok response)
                 console.error('Error submitting form:', error);
                 formStatus.textContent = `Error al enviar: ${error.message || 'Intenta de nuevo.'}`;
                 formStatus.style.color = 'red';
-                 // Remove the message after a few seconds
-                 setTimeout(() => {
-                    formStatus.textContent = '';
-                }, 7000); // Longer timeout for errors
+                 setTimeout(() => { formStatus.textContent = ''; }, 7000);
             });
         });
+        */
     } else {
         if (!form) console.warn("Contact form element (#contact-form) not found.");
         if (!formStatus) console.warn("Form status element (#form-status) not found.");
@@ -279,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupNavbarScroll();
     setupBackToTopButton();
     updateCopyrightYear();
-    setupContactForm(); // Initialize contact form with AJAX submission
+    setupContactForm(); // Initialize contact form check (AJAX disabled for now)
     setupFAQAccordion(); // Initialize FAQ accordion
 
     // Add fade-in class to sections for animation (if desired)
