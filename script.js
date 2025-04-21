@@ -183,16 +183,27 @@ const setupContactForm = () => {
                 }
             })
             .then(response => {
+                // Check if response status is ok (e.g., 2xx)
                 if (response.ok) {
-                    // If response is ok, assume success (FormSubmit might return success even if not activated yet)
-                    return response.json();
+                    return response.json(); // Parse JSON if response is ok
                 } else {
-                    // If response is not ok, try to parse error (might not be JSON)
-                    return response.text().then(text => { throw new Error(text || 'Error en la respuesta del servidor') });
+                    // If response is not ok, try to parse potential error text
+                    // FormSubmit might return errors as non-JSON, handle gracefully
+                    return response.text().then(text => {
+                        // Try to parse text as JSON in case error is structured
+                        try {
+                            const errorData = JSON.parse(text);
+                            throw new Error(errorData.message || text || 'Error en la respuesta del servidor');
+                        } catch (e) {
+                            // If text is not JSON, use the text itself or a generic error
+                            throw new Error(text || 'Error en la respuesta del servidor');
+                        }
+                    });
                 }
             })
             .then(data => {
-                // Handle successful JSON response (optional: check data.success if FormSubmit provides it)
+                // Handle successful JSON response
+                // FormSubmit AJAX success response usually includes { success: true }
                 console.log('FormSubmit success:', data);
                 formStatus.textContent = '¡Mensaje enviado con éxito! Gracias.';
                 formStatus.style.color = 'green';
@@ -205,12 +216,12 @@ const setupContactForm = () => {
             .catch(error => {
                 // Handle errors (network error or non-ok response)
                 console.error('Error submitting form:', error);
-                formStatus.textContent = 'Error al enviar el mensaje. Por favor, intenta de nuevo.';
+                formStatus.textContent = `Error al enviar: ${error.message || 'Intenta de nuevo.'}`;
                 formStatus.style.color = 'red';
                  // Remove the message after a few seconds
                  setTimeout(() => {
                     formStatus.textContent = '';
-                }, 5000);
+                }, 7000); // Longer timeout for errors
             });
         });
     } else {
